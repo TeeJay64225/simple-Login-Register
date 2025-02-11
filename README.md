@@ -19,3 +19,12 @@ project-root/
 │   │── style.css          # Styling
 │   │── script.js          # Frontend logic
 │── README.md              # Project documentation
+
+
+
+
+
+
+
+
+

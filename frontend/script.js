@@ -1,4 +1,4 @@
-const apiURL = "https://simple-login-register-r9pp.onrender.com"; // Correct backend URL
+const apiURL = "https://simple-login-register-r9pp.onrender.com:10000"; // Ensure correct backend URL"; // Correct backend URL
 
 async function register() {
     const name = document.getElementById("regName").value;

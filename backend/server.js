@@ -12,10 +12,11 @@ const PORT = process.env.PORT || 5000;
 
 // CORS Middleware (Allow frontend requests from Vercel)
 app.use(cors({
-    origin: "https://simple-login-register.vercel.app", // Your frontend URL
+    origin: "*",  // Allow all origins for debugging
     methods: "GET,POST",
     credentials: true
 }));
+
 
 // Middleware
 app.use(express.json());
@@ -56,8 +57,6 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-
-// User Login Route
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -69,43 +68,29 @@ app.post('/login', async (req, res) => {
         // Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
+            console.log("❌ User not found:", email);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
         // Compare hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            console.log("❌ Password mismatch for user:", email);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
         // Generate JWT token
+        if (!process.env.JWT_SECRET) {
+            console.error("❌ JWT_SECRET is missing in .env");
+            return res.status(500).json({ message: "Internal Server Error: JWT misconfiguration" });
+        }
+
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+        console.log(`✅ Login successful for user: ${email}`);
         res.json({ message: 'Login successful', token });
     } catch (error) {
-        console.error('❌ Error:', error);
+        console.error('❌ Login Error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-
-// MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI;
-if (!MONGO_URI) {
-    console.error("❌ MongoDB connection string is missing in .env");
-    process.exit(1);
-}
-
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => {
-        console.log('✅ MongoDB Connected');
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on port ${PORT}`);
-        });
-    })
-    .catch(err => {
-        console.error('❌ MongoDB connection error:', err);
-        process.exit(1);
-    });

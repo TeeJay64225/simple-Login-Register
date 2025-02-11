@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .primary-button {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #1557b0;
+        }
+
+        .secondary-button {
+            background-color: #ffffff;
+            color: #1a73e8;
+            border: 1px solid #1a73e8;
+        }
+
+        .secondary-button:hover {
+            background-color: #f6f9fe;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Platform</h1>
+        <p>Please login to access your account</p>
+        <div class="button-group">
+            <a href="./frontend/index.html" class="button primary-button">Login</a>
+            <a href="./frontend/index.html?type=guest" class="button secondary-button">Continue as Guest</a>
+        </div>
+    </div>
+</body>
+</html>

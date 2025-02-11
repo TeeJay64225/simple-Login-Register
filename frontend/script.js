@@ -5,7 +5,7 @@ async function register() {
     const email = document.getElementById("regEmail").value;
     const password = document.getElementById("regPassword").value;
 
-    const res = await fetch(`${apiURL}/register`, { // Ensure the correct route
+    const res = await fetch(`${apiURL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
@@ -19,7 +19,7 @@ async function login() {
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
 
-    const res = await fetch(`${apiURL}/login`, { // Ensure the correct route
+    const res = await fetch(`${apiURL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -27,9 +27,10 @@ async function login() {
 
     const data = await res.json();
     if (data.token) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token); // Save token
+        alert("Login successful!");
         window.location.href = "landing.html";
     } else {
-        alert(data.error || "Login failed!");
+        alert(data.message || "Login failed!");
     }
 }
